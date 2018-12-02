@@ -9,20 +9,20 @@ import pandas as pd
 
 CV_FILE_SUFFIX = ".png"
 
-# import data
-data = pd.read_excel('TN_ca.xlsx', header=1)
+data = pd.read_csv('/home/user/Desktop/transposon/FreadI1_trimmed_sorted_analysis.csv', header=0)
 
-# replace yes/no with 1/0 labeling
-data = data.replace('Yes', 1)
-data = data.replace('No', 0)
-
-# define model features
-# play around a little with the feature selection to see the different results
-# in this example the best two features are selected
-selected_features = [6, 7]
+selected_features = [1, 3, 4, 5, 6, 7, 9]
 features = data.iloc[:, selected_features]
-ground_truth = data.iloc[:, 10]
 
+ground_truth = pd.read_csv('training_set_Sc.csv', header=0)
+ground_truth = ground_truth.iloc[:, [0, 3]]
+ground_truth = ground_truth.replace('Essential', 1)
+ground_truth = ground_truth.replace('Non essential', 0)
+
+final_data = ground_truth.merge(features)
+
+label = final_data.iloc[:, 1]
+final_features = final_data.iloc[:, [2, 3, 4, 5, 6, 7]]
 
 def cross_validate(X, y):
     
@@ -65,8 +65,8 @@ def cross_validate(X, y):
     matplotlib.pyplot.ylabel("True Positive Rate")
     matplotlib.pyplot.title("Receiver operating characteristic")
     matplotlib.pyplot.legend(loc="lower right")
-    matplotlib.pyplot.savefig("ca_tn" + CV_FILE_SUFFIX)
+    matplotlib.pyplot.savefig("sc_tn" + CV_FILE_SUFFIX)
     matplotlib.pyplot.show()
 
 
-cross_validate(features, ground_truth)
+cross_validate(final_features, label)

@@ -1,0 +1,98 @@
+SCTrainingSet/saccharomyces_cerevisiae_64-2-1.gff.fai
+FreadI1_trimmed_sorted_analysis.csv
+SCTrainingSet.zip
+SCTrainingSet/S288C_reference_sequence_R64-2-1_20150113.fsa
+SCTrainingSet/S288C_reference_sequence_R64-2-1_20150113.fsa.fai
+SCTrainingSet/Saccharomyces_cerevisiae.R64-1-1.41.gff3
+SCTrainingSet/saccharomyces_cerevisiae_64-2-1.gff
+SCTrainingSet/WT_1/FreadI1_trimmed_sorted.bam
+SCTrainingSet/sc.1.bt2
+SCTrainingSet/sc.2.bt2
+SCTrainingSet/sc.3.bt2
+SCTrainingSet/sc.4.bt2
+SCTrainingSet/sc.rev.1.bt2
+SCTrainingSet/sc.rev.2.bt2
+SCTrainingSet/WT_1/FreadI1.fastq
+SCTrainingSet/WT_1/FreadI1_fastqc.html
+SCTrainingSet/WT_1/FreadI1_fastqc.zip
+SCTrainingSet/WT_1/FreadI1_trimmed.bam
+SCTrainingSet/WT_1/FreadI1_trimmed.fastq
+SCTrainingSet/WT_1/FreadI1_trimmed.sam
+SCTrainingSet/WT_1/FreadI1_trimmed2.bam
+SCTrainingSet/WT_1/FreadI1_trimmed_fastqc.html
+SCTrainingSet/WT_1/FreadI1_trimmed_fastqc.zip
+SCTrainingSet/WT_1/FreadI1_trimmed_sorted.bam.bai
+SCTrainingSet/WT_1/RreadI1.fastq
+SCTrainingSet/WT_1/RreadI1_fastqc.html
+SCTrainingSet/WT_1/RreadI1_fastqc.zip
+SCTrainingSet/WT_1/__MACOSX/._FreadI1.fastq
+SCTrainingSet/WT_1/__MACOSX/._RreadI1.fastq
+SCTrainingSet/WT_2/FreadI2.fastq
+SCTrainingSet/WT_2/FreadI2_fastqc.html
+SCTrainingSet/WT_2/FreadI2_fastqc.zip
+SCTrainingSet/WT_2/FreadI2_trimmed.fastq
+SCTrainingSet/WT_2/RreadI2.fastq
+SCTrainingSet/WT_2/RreadI2_fastqc.html
+SCTrainingSet/WT_2/RreadI2_fastqc.zip
+SCTrainingSet/WT_2/__MACOSX/._FreadI2.fastq
+SCTrainingSet/WT_2/__MACOSX/._RreadI2.fastq
+transposon-pipeline-master/dependencies/cerevisiae/cerevisiae_inviable_annotations.txt
+transposon-pipeline-master/dependencies/README.txt
+transposon-pipeline-master/dependencies/Kornmann/07 - WildType1.wig
+transposon-pipeline-master/dependencies/Kornmann/08 - WildType2.wig
+transposon-pipeline-master/dependencies/albicans/C_albicans_SC5314_S_cerevisiae_best_hits.txt
+transposon-pipeline-master/dependencies/albicans/C_albicans_SC5314_S_cerevisiae_orthologs.txt
+transposon-pipeline-master/dependencies/albicans/C_albicans_SC5314_S_pombe_best_hits.txt
+transposon-pipeline-master/dependencies/albicans/C_albicans_SC5314_S_pombe_orthologs.txt
+transposon-pipeline-master/dependencies/albicans/C_albicans_SC5314_go_distribution.tab
+transposon-pipeline-master/dependencies/albicans/C_albicans_phenotype_data.tab
+transposon-pipeline-master/dependencies/albicans/List of possibly ess genes from Aaron Mitchell.csv
+transposon-pipeline-master/dependencies/albicans/MUTANT COLLECTIONS IN PROGRESS July 5 2017.xlsx
+transposon-pipeline-master/dependencies/albicans/deleted_regions.csv
+transposon-pipeline-master/dependencies/albicans/gene2go.txt
+transposon-pipeline-master/dependencies/albicans/go-basic.obo
+transposon-pipeline-master/dependencies/albicans/hasParalogs_ca.txt
+transposon-pipeline-master/dependencies/albicans/homologous_regions.csv
+transposon-pipeline-master/dependencies/albicans/ncomms7741-s2.xls
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_iprscan.out
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_version_A22-s07-m01-r08_chromosomal_feature.tab
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_version_A22-s07-m01-r08_chromosomes.fasta
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_version_A22-s07-m01-r08_chromosomes_HapA.fasta
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_version_A22-s07-m01-r08_chromosomes_HapA.1.bt2
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_version_A22-s07-m01-r08_chromosomes_HapA.2.bt2
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_version_A22-s07-m01-r08_chromosomes_HapA.3.bt2
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_version_A22-s07-m01-r08_chromosomes_HapA.4.bt2
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_version_A22-s07-m01-r08_chromosomes_HapA.fasta.fai
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_version_A22-s07-m01-r08_chromosomes_HapA.rev.1.bt2
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_version_A22-s07-m01-r08_chromosomes_HapA.rev.2.bt2
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_version_A22-s07-m01-r08_features.gff
+transposon-pipeline-master/dependencies/cerevisiae/S288C_reference_sequence_R64-2-1_20150113.fsa
+transposon-pipeline-master/dependencies/cerevisiae/S288C_reference_sequence_R64-2-1_20150113.fsa.fai
+transposon-pipeline-master/dependencies/cerevisiae/SGD_features.tab
+transposon-pipeline-master/dependencies/cerevisiae/cerevisiae_viable_annotations.txt
+transposon-pipeline-master/dependencies/cerevisiae/duplicatesSl_011116.txt
+transposon-pipeline-master/dependencies/cerevisiae/hasParalogs_sc.txt
+transposon-pipeline-master/dependencies/cerevisiae/homologous_regions.csv
+transposon-pipeline-master/dependencies/cerevisiae/neFitnessStandard.txt
+transposon-pipeline-master/dependencies/pombe/FYPOviability.tsv
+transposon-pipeline-master/dependencies/pombe/Schizosaccharomyces_pombe.ASM294v2.30.dna.genome.fa
+transposon-pipeline-master/dependencies/pombe/hasParalogs_sp.txt
+transposon-pipeline-master/dependencies/pombe/hermes_hits.csv
+transposon-pipeline-master/dependencies/pombe/homologous_regions.csv
+transposon-pipeline-master/dependencies/pombe/schizosaccharomyces_pombe.chr.gff3
+transposon-pipeline-master/images/workflow.jpg
+transposon-pipeline-master/images/primer.jpg
+transposon-pipeline-master/dependencies/albicans/reference genome/C_albicans_SC5314_version_A22-s07-m01-r08_features.gff.gffutils_db.sqlite
+transposon-pipeline-master/__pycache__/Shared.cpython-36.pyc
+transposon-pipeline-master/dependencies/pombe/schizosaccharomyces_pombe.chr.gff3.gffutils_db.sqlite
+transposon-pipeline-master/output/FreadI1_trimmed_sorted.all_hits.csv
+transposon-pipeline-master/output/FreadI1_trimmed_sorted.filter_1.bed
+transposon-pipeline-master/output/FreadI1_trimmed_sorted.neighborhood_index.1.500_300.png
+transposon-pipeline-master/output/FreadI1_trimmed_sorted.outlier_stats.txt
+transposon-pipeline-master/output/FreadI1_trimmed_sorted.proteome.filter_1.bed
+transposon-pipeline-master/output/FreadI1_trimmed_sorted.reads_distribution.hits.log10.rdf_1.png
+transposon-pipeline-master/output/FreadI1_trimmed_sorted.reads_distribution.log10.rdf_1.png
+transposon-pipeline-master/output/FreadI1_trimmed_sorted_Hits.csv
+transposon-pipeline-master/output/hit_summary.RDF_1.csv
+transposon-pipeline-master/output/insertion_vs_neighborhood_correlations.txt
+transposon-pipeline-master/output/stats.csv
