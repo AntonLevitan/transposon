@@ -169,3 +169,12 @@ verdict.csv
 your_file.txt
 your_file2.txt
 SCTrainingSet/RreadI1.fastq
+SCTrainingSet/Both_readI2_trimmed_sorted_.bam.bai
+Both_readI1_trimmed.sam
+sc_tn.png
+test19.png
+SCTrainingSet/Both_readI1_trimmed_sorted_.bam
+SCTrainingSet/Both_readI1_trimmed_sorted_.bam.bai
+SCTrainingSet/Both_readI2_trimmed_sorted_.bam
+sc_tn.png
+sc_tn.png

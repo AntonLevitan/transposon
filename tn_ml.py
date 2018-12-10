@@ -12,11 +12,11 @@ rcParams.update({'figure.autolayout': True})
 
 CV_FILE_SUFFIX = ".png"
 
-# data = pd.read_csv('/home/user/Desktop/transposon/FreadI1_trimmed_sorted_analysis.csv', header=0)
-data = pd.read_excel('/home/user/Desktop/transposon/sanity_check_classifier.xlsx', header=0)
+data = pd.read_csv('/home/user/Desktop/transposon/FreadI1_trimmed_sorted_analysis.csv', header=0)
+# data = pd.read_excel('/home/user/Desktop/transposon/sanity_check_classifier.xlsx', header=0)
 
-# selected_features = [1,3,4,5,6,7,8]
-selected_features = [0,1,2,3,4,5,6]
+selected_features = [1,3,4,5,6,7,8]
+# selected_features = [0,1,2,3,4,5,6]
 
 features = data.iloc[:, selected_features]
 all_genes_features = features.iloc[:, [1,2,3,4,5,6]]
@@ -93,9 +93,8 @@ def cross_validate(X, y, data, all_genes_features, all_genes):
     matplotlib.pyplot.show()
 
 
-cross_validate(final_features, label, ground_truth, all_genes_features, data)
-
 def plot_feat_imp():
+
     #feature importance plot
     classifier = sklearn.ensemble.RandomForestClassifier(n_estimators=200, n_jobs=-1, random_state=15)
     classifier.fit(final_features, label)
@@ -106,15 +105,14 @@ def plot_feat_imp():
                            importance in zip(feature_list, importances)]
     feature_importances = sorted(feature_importances, key = lambda x: x[1], reverse = True)
     
-    # fig,ax = matplotlib.pyplot.subplots(figsize=(8, 5))
-
     matplotlib.pyplot.style.use('fivethirtyeight')
     x_values = list(range(len(importances)))
     matplotlib.pyplot.bar(x_values, importances, orientation = 'vertical')
     matplotlib.pyplot.xticks(x_values, feature_list, rotation=45)
     matplotlib.pyplot.ylabel('Importance'); matplotlib.pyplot.title('Feature Importance');
-    #matplotlib.pyplot.gcf().sublots_adjust(bottom=0.15)
     matplotlib.pyplot.savefig('sc_tn' + '_feature_importance')
     matplotlib.pyplot.show()
 
+
 # plot_feat_imp()
+cross_validate(final_features, label, ground_truth, all_genes_features, data)

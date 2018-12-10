@@ -1,0 +1,1 @@
+Both_readI1_trimmed
