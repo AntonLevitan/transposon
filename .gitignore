@@ -178,3 +178,79 @@ SCTrainingSet/Both_readI1_trimmed_sorted_.bam.bai
 SCTrainingSet/Both_readI2_trimmed_sorted_.bam
 sc_tn.png
 sc_tn.png
+Neighborhood index vs. verdict difference.png
+% autonomous vs. ACS.png
+% autonomous vs. ORC.png
+% autonomous vs. proORI.png
+% transient vs. ACS.png
+% transient vs. ORC.png
+% transient vs. proORI.png
+100 bp upstream hits.png
+AcDs Verdict vs. Hermes Verdict.png
+Freedom index.png
+Freedom index vs. verdict difference.png
+Hits.png
+Length.png
+Neighborhood index.png
+Reads.png
+S288C_reference_sequence_R64-2-1_20150113.fsa
+verdict difference vs. Neighborhood index.png
+sanity_check_3.xlsx
+sc_tn.png
+swathi data.ods
+swathi data.xlsx
+test20.png
+verdict difference vs. Freedom index.png
+verdict difference vs. Hits.png
+verdict_difference.xlsx
+sc_tn.png
+sc_tn.png
+both_sc_tn_feature_importance.png
+Both_readI1_trimmed_sorted__analysis.csv
+FreadI2_trimmed_sorted__analysis.csv
+S288C_reference_genome_Current_Release.tgz
+both_AcDs Verdict vs. Hermes Verdict.png
+both_all_anton_verdict.csv
+both_hits_chart.py
+both_sc_tn.png
+both_training_hermes_verdict.csv
+f2_training_hermes_verdict.csv
+f1_sc_tn.png
+f2_all_anton_verdict.csv
+f2_sc_tn.png
+sanity_check_4.xlsx
+sanity_check_5.xlsx
+sc_tn.png
+transposon-pipeline-master/FreadI2_trimmed_sorted_.all_hits.csv
+SCTrainingSet/tn_bash_pipe.py
+transposon-pipeline-master/Both_readI1_trimmed_sorted_.all_hits.csv
+transposon-pipeline-master/Both_readI1_trimmed_sorted_.filter_1.bed
+transposon-pipeline-master/Both_readI1_trimmed_sorted_.neighborhood_index.1.500_300.png
+transposon-pipeline-master/Both_readI1_trimmed_sorted_.outlier_stats.txt
+transposon-pipeline-master/Both_readI1_trimmed_sorted_.proteome.filter_1.bed
+transposon-pipeline-master/Both_readI1_trimmed_sorted_.reads_distribution.hits.log10.rdf_1.png
+transposon-pipeline-master/Both_readI1_trimmed_sorted_.reads_distribution.log10.rdf_1.png
+transposon-pipeline-master/Both_readI1_trimmed_sorted__Hits.csv
+transposon-pipeline-master/FreadI1_trimmed_sorted.all_hits.csv
+transposon-pipeline-master/FreadI1_trimmed_sorted.filter_1.bed
+transposon-pipeline-master/FreadI1_trimmed_sorted.neighborhood_index.1.500_300.png
+transposon-pipeline-master/FreadI1_trimmed_sorted.outlier_stats.txt
+transposon-pipeline-master/FreadI1_trimmed_sorted.proteome.filter_1.bed
+transposon-pipeline-master/FreadI1_trimmed_sorted.reads_distribution.hits.log10.rdf_1.png
+transposon-pipeline-master/FreadI1_trimmed_sorted.reads_distribution.log10.rdf_1.png
+transposon-pipeline-master/FreadI1_trimmed_sorted_Hits.csv
+transposon-pipeline-master/FreadI2_trimmed_sorted_.bam
+transposon-pipeline-master/FreadI2_trimmed_sorted_.bam.bai
+transposon-pipeline-master/FreadI2_trimmed_sorted_.filter_1.bed
+transposon-pipeline-master/FreadI2_trimmed_sorted_.neighborhood_index.1.500_300.png
+transposon-pipeline-master/FreadI2_trimmed_sorted_.outlier_stats.txt
+transposon-pipeline-master/FreadI2_trimmed_sorted_.proteome.filter_1.bed
+transposon-pipeline-master/FreadI2_trimmed_sorted_.reads_distribution.hits.log10.rdf_1.png
+transposon-pipeline-master/FreadI2_trimmed_sorted_.reads_distribution.log10.rdf_1.png
+transposon-pipeline-master/FreadI2_trimmed_sorted__Hits.csv
+transposon-pipeline-master/hit_summary.RDF_1.csv
+transposon-pipeline-master/insertion_vs_neighborhood_correlations.txt
+transposon-pipeline-master/stats.csv
+sc_tn.png
+SCTrainingSet/FreadI2_trimmed_sorted_.bam
+SCTrainingSet/FreadI2_trimmed_sorted_.bam.bai

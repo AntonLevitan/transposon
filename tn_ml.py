@@ -12,15 +12,16 @@ rcParams.update({'figure.autolayout': True})
 
 CV_FILE_SUFFIX = ".png"
 
-data = pd.read_csv('/home/user/Desktop/transposon/FreadI1_trimmed_sorted_analysis.csv', header=0)
+data = pd.read_csv('/home/user/Desktop/transposon/FreadI2_trimmed_sorted__analysis.csv', header=0)
 # data = pd.read_excel('/home/user/Desktop/transposon/sanity_check_classifier.xlsx', header=0)
 
-selected_features = [1,3,4,5,6,7,8]
+selected_features = [1,3,4,5,6,7,9]
 # selected_features = [0,1,2,3,4,5,6]
 
 features = data.iloc[:, selected_features]
+print(features.head())
 all_genes_features = features.iloc[:, [1,2,3,4,5,6]]
-# print(all_genes_features)
+print(all_genes_features.head())
 
 ground_truth = pd.read_csv('training_set_Sc.csv', header=0)
 ground_truth = ground_truth.iloc[:, [0, 3]]
@@ -46,14 +47,14 @@ def cross_validate(X, y, data, all_genes_features, all_genes):
     # print(all_genes_features)
     # print(len(x))
     all_genes['Hermes Verdict'] = x
-    all_genes.to_csv('all_anton_verdict.csv')
+    all_genes.to_csv('f2_all_anton_verdict.csv')
     # print(all_genes)
     prob = pd.Series(probas_)
     verdict = pd.DataFrame()
     verdict['name'] = data['Standard name']
     verdict['label'] = y
     verdict['verdict'] = prob
-    verdict.to_csv('training_hermes_verdict.csv')
+    verdict.to_csv('f2_training_hermes_verdict.csv')
     
     # plotting of the ROC taken from the scikit-learn documentation
     tprs = []
@@ -89,7 +90,7 @@ def cross_validate(X, y, data, all_genes_features, all_genes):
     matplotlib.pyplot.ylabel("True Positive Rate")
     matplotlib.pyplot.title("Receiver operating characteristic")
     matplotlib.pyplot.legend(loc="lower right")
-    matplotlib.pyplot.savefig("sc_tn" + CV_FILE_SUFFIX)
+    matplotlib.pyplot.savefig("f2_sc_tn" + CV_FILE_SUFFIX)
     matplotlib.pyplot.show()
 
 
@@ -110,7 +111,7 @@ def plot_feat_imp():
     matplotlib.pyplot.bar(x_values, importances, orientation = 'vertical')
     matplotlib.pyplot.xticks(x_values, feature_list, rotation=45)
     matplotlib.pyplot.ylabel('Importance'); matplotlib.pyplot.title('Feature Importance');
-    matplotlib.pyplot.savefig('sc_tn' + '_feature_importance')
+    matplotlib.pyplot.savefig('both_sc_tn' + '_feature_importance')
     matplotlib.pyplot.show()
 
 
