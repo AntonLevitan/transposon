@@ -39,9 +39,12 @@ if not os.path.exists(DATA_DIRECTORY + SAM_FILE):
     print('Aligning reads...')
     if arguments().pe:
         FASTQ_2 = input('Enter reverse fastq: ') + FASTQ_SUFFIX
-        proc = subprocess.call(['bowtie2', '-p', '8', '--end-to-end', '-x', DATA_DIRECTORY + SC_REF, '--fr', '-1', DATA_DIRECTORY + FASTQ_1, '-2', DATA_DIRECTORY + FASTQ_2, '-S', DATA_DIRECTORY + SAM_FILE])
+        proc = subprocess.call(['bowtie2', '-p', '8', '--end-to-end', '-x', DATA_DIRECTORY + SC_REF, '--fr', '-1',
+                                DATA_DIRECTORY + FASTQ_1, '-2', DATA_DIRECTORY + FASTQ_2,
+                                '-S', DATA_DIRECTORY + SAM_FILE])
     else:
-        proc = subprocess.call(['bowtie2', '-p', '8', '--end-to-end', '-x', DATA_DIRECTORY + SC_REF, '-U', DATA_DIRECTORY + FASTQ_1, '-S', DATA_DIRECTORY + SAM_FILE])
+        proc = subprocess.call(['bowtie2', '-p', '8', '--end-to-end', '-x', DATA_DIRECTORY + SC_REF,
+                                '-U', DATA_DIRECTORY + FASTQ_1, '-S', DATA_DIRECTORY + SAM_FILE])
 
 if not os.path.exists(DATA_DIRECTORY + BAM_FILE):    
     print('Converting sam to bam...')
