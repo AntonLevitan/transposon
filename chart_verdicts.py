@@ -4,7 +4,7 @@ from scipy.stats import spearmanr, pearsonr
 import numpy as np
 from matplotlib.ticker import NullFormatter
 
-data = pd.read_excel('sanity_check_5.xlsx')
+data = pd.read_excel('sanity_check_6.xlsx')
 
 acds = data.iloc[:, [0, 2]]
 hermes = data.iloc[:, [4, 5]]

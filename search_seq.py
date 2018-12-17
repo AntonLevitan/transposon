@@ -5,16 +5,16 @@ import pandas as pd
 import csv
 import numpy as np
 
-# query = 'NTNNNNAN'
-# # seq_file = '/home/user/Desktop/transposon/SCTrainingSet/WT_1/FreadI1_trimmed.fastq'
-# seq_file = '/home/user/Desktop/transposon/S288C_reference_sequence_R64-2-1_20150113.fsa'
-#
-# # gffutils creating database
-# # db = gffutils.create_db('/home/user/Desktop/transposon/SCTrainingSet/saccharomyces_cerevisiae_64-2-1.gff',
-# #                         'sc_gffutils_database')
-#
-# db = gffutils.FeatureDB('sc_gffutils_database')
-# sc_genes = db.all_features(featuretype='gene')
+query = 'NTNNNNAN'
+# seq_file = '/home/user/Desktop/transposon/SCTrainingSet/WT_1/FreadI1_trimmed.fastq'
+seq_file = '/home/user/Desktop/transposon/S288C_reference_sequence_R64-2-1_20150113.fsa'
+
+# gffutils creating database
+# db = gffutils.create_db('/home/user/Desktop/transposon/SCTrainingSet/saccharomyces_cerevisiae_64-2-1.gff',
+#                         'sc_gffutils_database')
+
+db = gffutils.FeatureDB('sc_gffutils_database')
+sc_genes = db.all_features(featuretype='gene')
 
 
 def count_lines(txtfile):
@@ -59,13 +59,14 @@ def get_features(gffutils_db):
 
 def freq_appearance(file, query, gffutils_db, filetype='fasta'):
     """ Frequency of occurrence of a query sequence in a file
-w
+
     :param file: sequence file
     :param query: sequence query (string)
+    :param gffutils_db: gffutils all_features database
     :param filetype: parameter for SeqIO.parse (default='fasta')
 
     """
-    chromes = get_features(gffutils_db)[1]
+    sc_features, chromes = get_features(gffutils_db)
     chroms_locs = pd.DataFrame(np.nan, index=range(250000), columns=chromes)
     count = 0
     total_length = 0
@@ -83,76 +84,90 @@ w
     chroms_locs = chroms_locs.dropna(how='all')
     chroms_locs.to_csv('seq_locations_on_chromosomes.csv')
 
-    return chroms_locs
+    return chroms_locs, sc_features
 
 
-# target_seq_loc = freq_appearance(seq_file, query, sc_genes)
-# print(target_seq_loc.head())
+def count_target_seq():
+    # chr_loc = pd.read_csv('seq_locations_on_chromosomes.csv').drop('Unnamed: 0', axis=1)
+    # genes_coords = pd.read_csv('sc_features_coords.csv').drop('Unnamed: 0', axis=1)
+    chr_loc, genes_coords = freq_appearance(seq_file, query, sc_genes)
+    chroms = list(pd.unique(chr_loc.columns))
+    genes_coords['target_seq_counts'] = np.zeros(len(genes_coords.index))
+    genes_coords['500bp_up_target_seq_counts'] = np.zeros(len(genes_coords.index))
+    genes_coords['500bp_down_target_seq_counts'] = np.zeros(len(genes_coords.index))
+    target_counts = []
+    up_target_counts = []
+    down_target_counts = []
+
+    for chrom in chroms:
+
+        chr_coords = genes_coords[genes_coords['chrom'] == chrom]
+        seq_intervals = []
+        up_intervals = []
+        down_intervals = []
+
+        for j in chr_coords.id:
+            seq_intervals.append(frozenset(range(chr_coords[chr_coords.id == j].start,
+                                                 chr_coords[chr_coords.id == j].end + 1)))
+
+        seq_counts = [0] * len(seq_intervals)
+
+        for n in chr_loc[chrom]:
+            for i, inter in enumerate(seq_intervals):
+                if n in inter:
+                    seq_counts[i] += 1
+
+        target_counts.extend(seq_counts)
+
+        for j in chr_coords.id:
+            up_intervals.append(frozenset(range(chr_coords[chr_coords.id == j].start - 500,
+                                                chr_coords[chr_coords.id == j].start + 1)))
+
+        up_counts = [0] * len(up_intervals)
+
+        for n in chr_loc[chrom]:
+            for i, inter in enumerate(up_intervals):
+                if n in inter:
+                    up_counts[i] += 1
+
+        up_target_counts.extend(up_counts)
+
+        for j in chr_coords.id:
+            down_intervals.append(frozenset(range(chr_coords[chr_coords.id == j].end,
+                                                  chr_coords[chr_coords.id == j].end + 500 + 1)))
+
+        down_counts = [0] * len(down_intervals)
+
+        for n in chr_loc[chrom]:
+            for i, inter in enumerate(down_intervals):
+                if n in inter:
+                    down_counts[i] += 1
+
+        down_target_counts.extend(down_counts)
+
+    target_counts = np.array(target_counts)
+    up_target_counts = np.array(up_target_counts)
+    down_target_counts = np.array(down_target_counts)
+
+    genes_coords['target_seq_counts'] = target_counts
+    genes_coords['500bp_up_target_seq_counts'] = up_target_counts
+    genes_coords['500bp_down_target_seq_counts'] = down_target_counts
+
+    genes_coords['length'] = genes_coords['end'] + 1 - genes_coords['start']
+    genes_coords['target_per_bp'] = genes_coords['target_seq_counts'] / genes_coords['length']
+    genes_coords['up_target_per_bp'] = genes_coords['500bp_up_target_seq_counts'] / 500
+    genes_coords['down_target_per_bp'] = genes_coords['500bp_down_target_seq_counts'] / 500
+
+    print(genes_coords.head())
+    genes_coords.to_csv('target_seq_counts.csv')
 
 
-chr_loc = pd.read_csv('seq_locations_on_chromosomes.csv').drop('Unnamed: 0', axis=1)
-genes_coords = pd.read_csv('sc_features_coords.csv').drop('Unnamed: 0', axis=1)
-chroms = list(pd.unique(chr_loc.columns))
-genes_coords['target_seq_counts'] = np.zeros(len(genes_coords.index))
-genes_coords['500bp_up_target_seq_counts'] = np.zeros(len(genes_coords.index))
-genes_coords['500bp_down_target_seq_counts'] = np.zeros(len(genes_coords.index))
-target_counts = []
-up_target_counts = []
-down_target_counts = []
+count_target_seq()
 
-for chrom in chroms:
+target_seq = pd.read_csv('/home/user/Desktop/transposon/target_seq_counts.csv')
+translation = pd.read_csv('/home/user/Desktop/transposon/nomenclature_translation_SGD.csv')
+tn_features = pd.read_csv('/home/user/Desktop/transposon/FreadI1_trimmed_sorted_analysis.csv')
 
-    chr_coords = genes_coords[genes_coords['chrom'] == chrom]
-    seq_intervals = []
-    up_intervals = []
-    down_intervals = []
-
-    for j in chr_coords.id:
-        seq_intervals.append(frozenset(range(chr_coords[chr_coords.id == j].start,
-                                             chr_coords[chr_coords.id == j].end)))
-
-    seq_counts = [0] * len(seq_intervals)
-
-    for n in chr_loc[chrom]:
-        for i, inter in enumerate(seq_intervals):
-            if n in inter:
-                seq_counts[i] += 1
-
-    target_counts.extend(seq_counts)
-
-    for j in chr_coords.id:
-        up_intervals.append(frozenset(range(chr_coords[chr_coords.id == j].start-500,
-                                            chr_coords[chr_coords.id == j].start)))
-
-    up_counts = [0] * len(up_intervals)
-
-    for n in chr_loc[chrom]:
-        for i, inter in enumerate(up_intervals):
-            if n in inter:
-                up_counts[i] += 1
-
-    up_target_counts.extend(up_counts)
-
-    for j in chr_coords.id:
-        down_intervals.append(frozenset(range(chr_coords[chr_coords.id == j].end,
-                                              chr_coords[chr_coords.id == j].end + 500)))
-
-    down_counts = [0] * len(down_intervals)
-
-    for n in chr_loc[chrom]:
-        for i, inter in enumerate(down_intervals):
-            if n in inter:
-                down_counts[i] += 1
-
-    down_target_counts.extend(down_counts)
-
-target_counts = np.array(target_counts)
-up_target_counts = np.array(up_target_counts)
-down_target_counts = np.array(down_target_counts)
-
-genes_coords['target_seq_counts'] = target_counts
-genes_coords['500bp_up_target_seq_counts'] = up_target_counts
-genes_coords['500bp_down_target_seq_counts'] = down_target_counts
-
-print(genes_coords.head())
-genes_coords.to_csv('target_seq_counts.csv')
+translated = target_seq.merge(translation, on='id')
+final_data = tn_features.merge(translated, on='Standard name')
+final_data.to_csv('target_sequence_with_all_features.csv')
