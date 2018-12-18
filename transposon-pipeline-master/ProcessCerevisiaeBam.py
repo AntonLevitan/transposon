@@ -20,7 +20,7 @@ def main():
     # hit_map = {'I': {'W': {}, 'C': {}},
     #            'II': {'W': {}, 'C': {}},
     #            'III': {'W': {}, 'C': {}}}
-    hit_map = {chrom.name: {'W': {}, 'C': {}}  for chrom in cer_db}
+    hit_map = {chrom.name: {'W': {}, 'C': {}} for chrom in cer_db}
     
     for line in bam:
         if line.mapq < min_mapq:
@@ -52,8 +52,8 @@ def main():
         for chrom in sorted(hit_map.keys()):
             for strand in hit_map[chrom].keys():
                 for pos in sorted(hit_map[chrom][strand].keys()):
-#                     features = pom_db.get_features_at_location(chrom, pos)
-                    features = [] # It appears finding the hit gene is not necessary at this point
+                    # features = pom_db.get_features_at_location(chrom, pos)
+                    features = []  # It appears finding the hit gene is not necessary at this point
 
                     if len(features) > 2:
                         print "More than 1 feature at position", chrom, pos

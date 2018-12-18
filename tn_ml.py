@@ -11,7 +11,7 @@ rcParams.update({'figure.autolayout': True})
 
 CV_FILE_SUFFIX = ".png"
 
-data = pd.read_csv('/home/user/Desktop/transposon/target_sequence_with_all_features.csv')
+data = pd.read_csv('fr1_2_target_sequence_with_all_features.csv')
 # data = pd.read_excel('/home/user/Desktop/transposon/sanity_check_classifier.xlsx', header=0)
 
 selected_features = ['Standard name', 'Hits', 'Reads', 'Length', 'Neighborhood index', '100 bp upstream hits',
@@ -40,13 +40,13 @@ def cross_validate(X, y, data, all_genes_features, all_genes):
     classifier.fit(X, y,)
     x = classifier.predict_proba(all_genes_features)[:, 1]
     all_genes['Hermes Verdict'] = x
-    all_genes.to_csv('f2_all_anton_verdict.csv')
+    all_genes.to_csv('fr1_1_all_anton_verdict.csv')
     prob = pd.Series(probas_)
     verdict = pd.DataFrame()
     verdict['name'] = data['Standard name']
     verdict['label'] = y
     verdict['verdict'] = prob
-    verdict.to_csv('f1_target_training_hermes_verdict.csv')
+    verdict.to_csv('fr1_2_target_training_hermes_verdict.csv')
     
     # plotting of the ROC taken from the scikit-learn documentation
     tprs = []
@@ -83,7 +83,7 @@ def cross_validate(X, y, data, all_genes_features, all_genes):
     matplotlib.pyplot.ylabel("True Positive Rate")
     matplotlib.pyplot.title("Receiver operating characteristic")
     matplotlib.pyplot.legend(loc="lower right")
-    matplotlib.pyplot.savefig("f2_target_sc_tn" + CV_FILE_SUFFIX)
+    matplotlib.pyplot.savefig("fr1_2_target_sc_tn" + CV_FILE_SUFFIX)
     matplotlib.pyplot.show()
 
 
@@ -105,9 +105,9 @@ def plot_feat_imp():
     matplotlib.pyplot.xticks(x_values, feature_list, rotation=90)
     matplotlib.pyplot.ylabel('Importance')
     matplotlib.pyplot.title('Feature Importance')
-    matplotlib.pyplot.savefig('both_sc_tn' + '_feature_importance')
+    matplotlib.pyplot.savefig('fr1_2_sc_tn' + '_feature_importance')
     matplotlib.pyplot.show()
 
 
-plot_feat_imp()
-# cross_validate(final_features, label, ground_truth, all_genes_features, data)
+# plot_feat_imp()
+cross_validate(final_features, label, ground_truth, all_genes_features, data)

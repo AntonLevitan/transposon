@@ -7,10 +7,10 @@ import numpy as np
 
 query = 'NTNNNNAN'
 # seq_file = '/home/user/Desktop/transposon/SCTrainingSet/WT_1/FreadI1_trimmed.fastq'
-seq_file = '/home/user/Desktop/transposon/S288C_reference_sequence_R64-2-1_20150113.fsa'
+seq_file = 'S288C_reference_sequence_R64-2-1_20150113.fsa'
 
 # gffutils creating database
-# db = gffutils.create_db('/home/user/Desktop/transposon/SCTrainingSet/saccharomyces_cerevisiae_64-2-1.gff',
+# db = gffutils.create_db('saccharomyces_cerevisiae_R64-2-1_20150113.gff',
 #                         'sc_gffutils_database')
 
 db = gffutils.FeatureDB('sc_gffutils_database')
@@ -162,12 +162,12 @@ def count_target_seq():
     genes_coords.to_csv('target_seq_counts.csv')
 
 
-count_target_seq()
+# count_target_seq()
 
-target_seq = pd.read_csv('/home/user/Desktop/transposon/target_seq_counts.csv')
-translation = pd.read_csv('/home/user/Desktop/transposon/nomenclature_translation_SGD.csv')
-tn_features = pd.read_csv('/home/user/Desktop/transposon/FreadI1_trimmed_sorted_analysis.csv')
+target_seq = pd.read_csv('target_seq_counts.csv')
+translation = pd.read_csv('nomenclature_translation_SGD.csv')
+tn_features = pd.read_csv('fr1_2_sorted__analysis.csv')
 
 translated = target_seq.merge(translation, on='id')
 final_data = tn_features.merge(translated, on='Standard name')
-final_data.to_csv('target_sequence_with_all_features.csv')
+final_data.to_csv('fr1_2_target_sequence_with_all_features.csv')

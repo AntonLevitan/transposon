@@ -1,6 +1,7 @@
 import os
 import subprocess
 import argparse
+import pysam
 
 PAIRED_END_FLAG = '--pe'
 
@@ -40,25 +41,27 @@ if not os.path.exists(DATA_DIRECTORY + SAM_FILE):
     print('Aligning reads...')
     if arguments().pe:
         FASTQ_2 = input('Enter reverse fastq: ') + FASTQ_SUFFIX
-        proc = subprocess.call(['bowtie2', '-p', '8', '--end-to-end', '-x', DATA_DIRECTORY + SC_REF,
+        proc = subprocess.call(['bowtie2', '-p', '12', '--end-to-end', '-x', DATA_DIRECTORY + SC_REF,
                                 '--fr', '-1', DATA_DIRECTORY + FASTQ_1, '-2', DATA_DIRECTORY + FASTQ_2,
                                 '-S', DATA_DIRECTORY + SAM_FILE])
     else:
-        proc = subprocess.call(['bowtie2', '-p', '8', '--end-to-end', '-x', DATA_DIRECTORY + SC_REF,
+        proc = subprocess.call(['bowtie2', '-p', '12', '--end-to-end', '-x', DATA_DIRECTORY + SC_REF,
                                 '-U', DATA_DIRECTORY + FASTQ_1,
                                 '-S', DATA_DIRECTORY + SAM_FILE])
 
 if not os.path.exists(DATA_DIRECTORY + BAM_FILE):    
     print('Converting sam to bam...')
     bam_logfile = open(DATA_DIRECTORY + BAM_FILE, 'w')
-    proc = subprocess.Popen(['samtools', 'view', '-Sb', DATA_DIRECTORY + SAM_FILE], stdout=bam_logfile)
+    proc = subprocess.Popen(['samtools', 'view', '-@', '12', '-Sb', DATA_DIRECTORY + SAM_FILE], stdout=bam_logfile)
     proc.wait()
     proc.kill()
 
 if not os.path.exists(DATA_DIRECTORY + SORTED_BAM):
     print('Sorting reads...')
-    proc = subprocess.call(['samtools', 'sort', '-o', DATA_DIRECTORY + SORTED_BAM, DATA_DIRECTORY + BAM_FILE])
+    proc = subprocess.call(['samtools', 'sort', '-@', '12', '-o', DATA_DIRECTORY + SORTED_BAM, DATA_DIRECTORY + BAM_FILE])
 
 if not os.path.exists(DATA_DIRECTORY + BAM_INDEX):
     print('Indexing bam...')
-    proc = subprocess.call(['samtools', 'index', DATA_DIRECTORY + SORTED_BAM])
+    pysam.index(DATA_DIRECTORY + SORTED_BAM)
+
+print('---- Done! ----')
