@@ -30,6 +30,7 @@ final_data = ground_truth.merge(features)
 label = final_data['Final usage in training']
 final_features = final_data[selected_features[1:]]
 
+
 def cross_validate(X, y, data, all_genes_features, all_genes):
     
     # this is where the model is defined and trained, random_state is specified to ensure reproducibility
@@ -89,7 +90,7 @@ def cross_validate(X, y, data, all_genes_features, all_genes):
 
 def plot_feat_imp():
 
-    #feature importance plot
+    # feature importance plot
     classifier = sklearn.ensemble.RandomForestClassifier(n_estimators=200, n_jobs=-1, random_state=15)
     classifier.fit(final_features, label)
     

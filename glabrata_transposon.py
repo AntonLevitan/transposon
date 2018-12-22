@@ -90,7 +90,7 @@ def glabrata_hitmap():
     gene_starts = []
     gene_ends = []
     for gene in cg_genes:
-        gene_chroms.append(str(gene.chrom).split('_', 1)[0])
+        gene_chroms.append(gene.chrom)
         gene_ids.append(str(gene.id).split(':', 2)[1])
         gene_starts.append(gene.start + 1)
         gene_ends.append(gene.end)
@@ -99,20 +99,17 @@ def glabrata_hitmap():
                                                                                                      'start', 'end'])
     gene_coords_df.to_csv('cg_features_coords.csv')
 
+    hit_map = {chrom: {'W': {}, 'C': {}} for chrom in gene_chroms}
+
     for line in bam:
         if line.mapq < min_mapq:
             continue
 
         raw_chrom = bam.getrname(line.reference_id)
-
-        #  TODO: chrom_names? maybe chrom directly from database? check back after creating database.
-        # if implement database here, change it.
-
-        if raw_chrom not in set(gene_chroms):
+        if raw_chrom not in gene_chroms:
             continue
 
-        chrom = str(gene.chrom).split('_', 1)[0]
-        if chrom not in set(gene_chroms):
+        if raw_chrom not in hit_map:
             continue
 
         # Since start < end always, in alignments which are reversed (along the
@@ -126,22 +123,15 @@ def glabrata_hitmap():
             pos = line.reference_start + 1
             strand = 'W'
 
-        hit_map[chrom][strand][pos] = hit_map[chrom][strand].get(pos, 0) + 1
+        hit_map[raw_chrom][strand][pos] = hit_map[raw_chrom][strand].get(pos, 0) + 1
 
     with open(os.path.splitext(args.bam)[0] + "_Hits.csv", "wb") as out_file:
         writer = csv.writer(out_file)
-        writer.writerow(["Chromosome", "Strand", "Position", "Reads", "Gene"])
+        writer.writerow(["Chromosome", "Strand", "Position", "Reads"])
         for chrom in sorted(hit_map.keys()):
             for strand in hit_map[chrom].keys():
                 for pos in sorted(hit_map[chrom][strand].keys()):
-                    # features = pom_db.get_features_at_location(chrom, pos)
-                    features = []  # It appears finding the hit gene is not necessary at this point
+                    writer.writerow([chrom, strand, pos, hit_map[chrom][strand][pos]])
 
-                    if len(features) > 2:
-                        print "More than 1 feature at position", chrom, pos
-
-                    writer.writerow([chrom, strand, pos,
-                                     hit_map[chrom][strand][pos],
-                                     "nan" if not features else features[0].standard_name])
 
 glabrata_hitmap()

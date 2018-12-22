@@ -2,7 +2,7 @@ from scipy import stats
 import pandas as pd
 from statsmodels.sandbox.stats.multicomp import multipletests
 
-data = pd.read_csv('target_seq_counts.csv')
+data = pd.read_csv('cg_target_seq_counts.csv')
 
 
 def pairwise_t_test(data):
@@ -24,3 +24,4 @@ def pairwise_t_test(data):
 
     return p_adjusted
 
+pairwise_t_test(data)

@@ -17,6 +17,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse, Rectangle
 
+
 def read_hit_files(files, read_depth_filter=1):
     """Read in the list of hits files.
     
@@ -27,6 +28,7 @@ def read_hit_files(files, read_depth_filter=1):
     """
 
     return [read_hit_file(f, read_depth_filter) for f in files]
+
 
 def read_hit_file(filename, read_depth_filter=1):
     """Read in the given hit file.
@@ -88,6 +90,7 @@ def read_hit_file(filename, read_depth_filter=1):
             result.append(obj)
                 
     return result
+
 
 def read_pombe_hit_file(filename, read_depth_filter=1):
     # TODO: should be standardized with the Calb hit file.
