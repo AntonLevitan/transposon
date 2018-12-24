@@ -11,10 +11,10 @@ rcParams.update({'figure.autolayout': True})
 
 CV_FILE_SUFFIX = ".png"
 
-data = pd.read_csv('fr1_2_target_sequence_with_all_features.csv')
+data = pd.read_csv('f2_all_anton_verdict.csv')
 # data = pd.read_excel('/home/user/Desktop/transposon/sanity_check_classifier.xlsx', header=0)
 
-selected_features = ['Standard name', 'Hits', 'Reads', 'Length', 'Neighborhood index', '100 bp upstream hits',
+selected_features = ['Standard name', 'Hits', 'Reads', 'Length', 'Neighborhood index',
                      'Freedom index', 'target_per_bp',	'up_target_per_bp',	'down_target_per_bp']
 
 features = data[selected_features]
