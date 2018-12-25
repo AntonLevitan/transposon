@@ -11,19 +11,22 @@ rcParams.update({'figure.autolayout': True})
 
 CV_FILE_SUFFIX = ".png"
 
-data = pd.read_csv('f2_all_anton_verdict.csv')
+data = pd.read_csv('FreadsWT_target_seq_counts_test.csv')
 # data = pd.read_excel('/home/user/Desktop/transposon/sanity_check_classifier.xlsx', header=0)
 
-selected_features = ['Standard name', 'Hits', 'Reads', 'Length', 'Neighborhood index',
-                     'Freedom index', 'target_per_bp',	'up_target_per_bp',	'down_target_per_bp']
+selected_features = ['Standard name', 'Hits', 'Reads', 'Length', 'Neighbourhood Index',
+                     '600_bp_up_target_seq_counts', '600_bp_down_target_seq_counts',
+                     'Freedom Index', 'target_per_bp',	'up_target_per_bp',	'down_target_per_bp']
 
 features = data[selected_features]
 all_genes_features = features[selected_features[1:]]
 
-ground_truth = pd.read_csv('training_set_Sc.csv', header=0)
-ground_truth = ground_truth.iloc[:, [0, 3]]
-ground_truth = ground_truth.replace('Essential', 1)
-ground_truth = ground_truth.replace('Non essential', 0)
+# ground_truth = pd.read_csv('training_set_Sc.csv', header=0)
+# ground_truth = ground_truth.iloc[:, [0, 3]]
+# ground_truth = ground_truth.replace('Essential', 1)
+# ground_truth = ground_truth.replace('Non essential', 0)
+
+ground_truth = pd.read_csv('glabrata_training_set.csv', header=0)
 
 final_data = ground_truth.merge(features)
 

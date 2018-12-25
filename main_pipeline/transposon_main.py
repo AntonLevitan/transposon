@@ -53,6 +53,7 @@ sc_features_file = dependencies_dir + sc_ref + '_features_coords.csv'
 cg_hermes_on_chr = 'cg_hermes_seq_locations_on_chromosomes.csv'
 sc_hermes_on_chr = 'sc_hermes_seq_locations_on_chromosomes.csv'
 
+
 def arguments():
 
     parser = argparse.ArgumentParser()
