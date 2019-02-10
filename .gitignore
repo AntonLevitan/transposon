@@ -254,3 +254,119 @@ transposon-pipeline-master/stats.csv
 sc_tn.png
 SCTrainingSet/FreadI2_trimmed_sorted_.bam
 SCTrainingSet/FreadI2_trimmed_sorted_.bam.bai
+/SCTrainingSet/
+/WtReadsSet1_180906/
+/transposon-pipeline-master/
+/ca_tn2.png
+/saccharomyces_cerevisiae_R64-2-1_20150113.gff
+/both_verdicts.csv
+/fr1_2_target_sc_tn.png
+/Freedom index vs. verdict difference.png
+/hermes_verdict.xlsx
+/cg_features_coords.csv
+/fr1_1_all_anton_verdict.csv
+/sanity_check_2.xlsx
+/chart.csv
+/FreadsWT_sorted.bam.bai
+/sanity_check_3.xlsx
+/% transient vs. ACS.png
+/S288C_reference_genome_Current_Release.tgz
+/tn_bash_pipe.py
+/S288C_reference_sequence_R64-2-1_20150113.fsa
+/Both_readI1_trimmed_sorted__analysis.csv
+/AcDs Verdict vs. Hermes Verdict.png
+/all_genes.xlsx
+/sc_gffutils_database
+/alignment_percentage_of_mapped_unmapped.png
+/Neighborhood index.png
+/test20.png
+/f2_target_sc_tn.png
+/both_sc_tn.png
+/all_genes.csv
+/text_ml.csv
+/tn_ml.py
+/chart_verdicts.py
+/target_sequence_with_all_features.csv
+/catn_verdict.xlsx
+/sra_data.fastq.gz
+/C_glabrata_CBS138_current_chromosomes.fasta
+/FreadI1_trimmed_sorted_analysis.csv
+/f1_sc_tn.png
+/tn.code-workspace
+/verdict difference vs. Freedom index.png
+/.gitignore
+/hermes_and_acds_verdict.csv
+/cg_gffutils_database
+/f2_sc_tn.png
+/TN_ca.xlsx
+/both_AcDs Verdict vs. Hermes Verdict.png
+/Length.png
+/sanity_check_4.xlsx
+/chart.xlsx
+/Reads.png
+/training_set_Sc.csv
+/f2_training_hermes_verdict.csv
+/download_SGD_data.py
+/merged2.xlsx
+/test19.png
+/glabrata_transposon.py
+/sanity_check.csv
+/% transient vs. ORC.png
+/count_unique_sequences.png
+/% autonomous vs. ORC.png
+/WtReadsSet1_180906.zip
+/Hits.png
+/GlabrataFeatures.gff3
+/sanity_check.xlsx
+/Freedom index.png
+/statistics.py
+/Dataset 2 ORF classifications.xlsx
+/swathi data.ods
+/both_all_anton_verdict.csv
+/FreadsWT_sorted_Hits.csv
+/Neighborhood index vs. verdict difference.png
+/cg_target_seq_counts.csv
+/% autonomous vs. ACS.png
+/% transient vs. proORI.png
+/.~lock.all_genes.xlsx#
+/all_anton_verdict.csv
+/cg_seq_locations_on_chromosomes.csv
+/f1_target_training_hermes_verdict.csv
+/alignment_percentage.png
+/verdict.csv
+/merged.csv
+/ca_tn.png
+/sanity_check_classifier.xlsx
+/counts_test.csv
+/.~lock.sanity_check.xlsx#
+/seq_locations_on_chromosomes.csv
+/tempCodeRunnerFile.py
+/all_features_comparison.xlsx
+/your_file2.txt
+/fr1_2_target_training_hermes_verdict.csv
+/f2_all_anton_verdict.csv
+/sanity_check_5.xlsx
+/search_seq.py
+/all_hermes_verdict.csv
+/sanity_check_6.xlsx
+/verdict difference vs. Hits.png
+/verdict_difference.xlsx
+/your_file.txt
+/both_hits.xlsx
+/sc_tn_feature_importance.png
+/100 bp upstream hits.png
+/both_training_hermes_verdict.csv
+/all_acds_verdict.csv
+/sc_tn.png
+/both_sc_tn_feature_importance.png
+/nomenclature_translation_SGD.csv
+/test18.png
+/training_hermes_verdict.csv
+/FreadI2_trimmed_sorted__analysis.csv
+/% autonomous vs. proORI.png
+/swathi data.xlsx
+/gc_seq_locations_on_chromosomes.csv
+/target_seq_counts.csv
+/verdict difference vs. Neighborhood index.png
+/test.csv
+/cg_target_seq_counts_test.csv
