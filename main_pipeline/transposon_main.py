@@ -8,16 +8,6 @@ import pandas as pd
 import numpy as np
 from Bio import SeqIO
 from Bio.SeqUtils import nt_search
-import matplotlib
-import matplotlib.pyplot
-import numpy
-import scipy
-import sklearn.ensemble
-import sklearn.metrics
-import sklearn.model_selection
-from matplotlib import rcParams
-rcParams.update({'figure.autolayout': True})
-
 
 species_flag = '--sp'
 paired_end_flag = '--pe'
@@ -39,19 +29,34 @@ bai_suffix = '.bai'
 
 sc_ref = 'sc'
 cg_ref = 'cg'
+ca_ref = 'ca'
+sp_ref = 'sp'
 cg_database = 'cg_gffutils_database'
+ca_database = 'C_albicans_SC5314_version_A22-s07-m01-r08_features.gff.gffutils_db.sqlite'
 sc_database = 'sc_gffutils_database'
+sp_database = 'schizosaccharomyces_pombe.chr.gff3.gffutils_db.sqlite'
 cg_features = dependencies_dir + 'GlabrataFeatures.gff3'
+ca_features = dependencies_dir + 'C_albicans_SC5314_A22_current_features.gff'
 sc_features = dependencies_dir + 'saccharomyces_cerevisiae_R64-2-1_20150113.gff'
+sp_features = dependencies_dir + 'schizosaccharomyces_pombe.chr.gff3'
 cg_reference = 'C_glabrata_CBS138_current_chromosomes.fasta'
 sc_reference = 'S288C_reference_sequence_R64-2-1_20150113.fsa'
+ca_reference = 'C_albicans_SC5314_version_A22-s07-m01-r08_chromosomes_HapA.fasta'
+sp_reference = 'Schizosaccharomyces_pombe.ASM294v2.30.dna.genome.fa'
 target_Hermes = 'NTNNNNAN'
+target_PiggyBac = 'TTAA'
 cg_ref_file = dependencies_dir + cg_reference
+ca_ref_file = dependencies_dir + ca_reference
 sc_ref_file = dependencies_dir + sc_reference
+sp_ref_file = dependencies_dir + sp_reference
 cg_features_file = dependencies_dir + cg_ref + '_features_coords.csv'
+ca_features_file = dependencies_dir + ca_ref + '_features_coords.csv'
 sc_features_file = dependencies_dir + sc_ref + '_features_coords.csv'
+sp_features_file = dependencies_dir + sp_ref + '_features_coords.csv'
 cg_hermes_on_chr = 'cg_hermes_seq_locations_on_chromosomes.csv'
+ca_hermes_on_chr = 'ca_piggybac_seq_locations_on_chromosomes.csv'
 sc_hermes_on_chr = 'sc_hermes_seq_locations_on_chromosomes.csv'
+sp_hermes_on_chr = 'sp_piggybac_seq_locations_on_chromosomes.csv'
 
 
 def arguments():
@@ -66,12 +71,13 @@ def arguments():
     return parser.parse_args()
 
 
+offset = 600
 file_prefix = str(arguments().fastq)[:-6]
 sam_file = file_prefix + sam_suffix
 bam_file = file_prefix + bam_suffix
 sorted_bam = file_prefix + '_sorted' + bam_suffix
 bam_index = sorted_bam + bai_suffix
-class_features = data_directory + file_prefix + '_target_seq_counts_test.csv'
+class_features = data_directory + file_prefix + '_' + str(offset) + '_NI2.csv'
 
 
 def bash_pipeline():
@@ -80,6 +86,10 @@ def bash_pipeline():
         ref = sc_ref
     elif arguments().sp == 'cg':
         ref = cg_ref
+    elif arguments().sp == 'ca':
+        ref = ca_ref
+    elif arguments().sp == 'sp':
+        ref = sp_ref
     else:
         raise ValueError('Unknown species flag specified')
 
@@ -137,6 +147,12 @@ def get_features():
     elif arguments().sp == 'cg':
         database = cg_database
         features = cg_features
+    elif arguments().sp == 'ca':
+        database = ca_database
+        features = ca_features
+    elif arguments().sp == 'sp':
+        database = sp_database
+        features = sp_features
     else:
         raise ValueError('Unknown species flag specified')
 
@@ -149,6 +165,10 @@ def get_features():
     if arguments().sp == 'cg':
         genes = db.all_features(featuretype='ORF')
     elif arguments().sp == 'sc':
+        genes = db.all_features(featuretype='gene')
+    elif arguments().sp == 'ca':
+        genes = db.all_features(featuretype='gene')
+    elif arguments().sp == 'sp':
         genes = db.all_features(featuretype='gene')
     else:
         raise ValueError('Unknown species flag specified')
@@ -167,12 +187,17 @@ def get_features():
         gene_starts.append(gene.start)
         gene_ends.append(gene.end)
 
-    gene_coords_df = pd.DataFrame(list(zip(gene_ids, gene_chroms, gene_starts, gene_ends)), columns=['id', 'chrom',
+    gene_coords_df = pd.DataFrame(list(zip(gene_ids, gene_chroms, gene_starts, gene_ends)), columns=['Standard name',
+                                                                                                     'chrom',
                                                                                                      'start', 'end'])
     if arguments().sp == 'cg':
         gene_coords_df.to_csv(cg_features_file)
     elif arguments().sp == 'sc':
         gene_coords_df.to_csv(sc_features_file)
+    elif arguments().sp == 'ca':
+        gene_coords_df.to_csv(ca_features_file)
+    elif arguments().sp == 'sp':
+        gene_coords_df.to_csv(sp_features_file)
     else:
         raise ValueError('Unknown species flag specified')
 
@@ -190,6 +215,10 @@ def glabrata_hitmap():
         features_file = cg_features_file
     elif arguments().sp == 'sc':
         features_file = sc_features_file
+    elif arguments().sp == 'ca':
+        features_file = ca_features_file
+    elif arguments().sp == 'sp':
+        features_file = sp_features_file
     else:
         raise ValueError('Unknown species flag specified')
 
@@ -206,6 +235,12 @@ def glabrata_hitmap():
                        'ref|NC_001138|', 'ref|NC_001139|', 'ref|NC_001140|', 'ref|NC_001141|', 'ref|NC_001142|',
                        'ref|NC_001143|', 'ref|NC_001144|', 'ref|NC_001145|', 'ref|NC_001146|', 'ref|NC_001147|',
                        'ref|NC_001148|', 'ref|NC_001224|']
+        hit_map = {chrom: {'W': {}, 'C': {}} for chrom in gene_chroms}
+    elif arguments().sp == 'ca':
+        gene_chroms = features['chrom'].unique()
+        hit_map = {chrom: {'W': {}, 'C': {}} for chrom in gene_chroms}
+    elif arguments().sp == 'sp':
+        gene_chroms = features['chrom'].unique()
         hit_map = {chrom: {'W': {}, 'C': {}} for chrom in gene_chroms}
     else:
         raise ValueError('Unknown species flag specified')
@@ -252,26 +287,45 @@ def target_seq(genome, query, filetype='fasta'):
 
     """ Finds a target sequence on a genome """
 
-    print('finding target sequences for Hermes')
+    print('finding target sequences')
 
     if arguments().sp == 'cg':
         features_file = cg_features_file
     elif arguments().sp == 'sc':
         features_file = sc_features_file
+    elif arguments().sp == 'ca':
+        features_file = ca_features_file
+    elif arguments().sp == 'sp':
+        features_file = sp_features_file
     else:
         raise ValueError('Unknown species flag specified')
 
     chromes = list(pd.read_csv(features_file)['chrom'].unique())
+    if arguments().sp == 'ca':
+        chromes = [str(chrom)[:9] for chrom in chromes if str(chrom)[8] == 'A']
+    if arguments().sp == 'sp':
+        chromes = ['I', 'II', 'III']
+
     chroms_locs = pd.DataFrame(np.nan, index=range(250000), columns=chromes)
     count = 0
     total_length = 0
     i = 0
     for record in SeqIO.parse(genome, filetype):
-        x = nt_search(str(record.seq), query)
-        count += len(x[1:])
-        total_length += len(record.seq)
-        chroms_locs[chromes[i]] = pd.Series(x[1:])
-        i += 1
+        if arguments().sp == 'sp':
+            if record.id in chromes:
+                x = nt_search(str(record.seq), query)
+                count += len(x[1:])
+                total_length += len(record.seq)
+                chroms_locs[chromes[i]] = pd.Series(x[1:])
+                i += 1
+            else:
+                pass
+        else:
+            x = nt_search(str(record.seq), query)
+            count += len(x[1:])
+            total_length += len(record.seq)
+            chroms_locs[chromes[i]] = pd.Series(x[1:])
+            i += 1
 
     chroms_locs = chroms_locs.dropna(how='all')
 
@@ -279,13 +333,17 @@ def target_seq(genome, query, filetype='fasta'):
         chroms_locs.to_csv(dependencies_dir + cg_hermes_on_chr)
     elif arguments().sp == 'sc':
         chroms_locs.to_csv(dependencies_dir + sc_hermes_on_chr)
+    elif arguments().sp == 'ca':
+        chroms_locs.to_csv(dependencies_dir + ca_hermes_on_chr)
+    elif arguments().sp == 'sp':
+        chroms_locs.to_csv(dependencies_dir + sp_hermes_on_chr)
     else:
         raise ValueError('Unknown species flag specified')
 
     return chroms_locs
 
 
-def classifier_features():
+def classifier_features(offset):
 
     """ Generates features for the classifier """
 
@@ -295,12 +353,39 @@ def classifier_features():
     elif arguments().sp == 'sc':
         chr_loc = pd.read_csv(dependencies_dir + sc_hermes_on_chr, index_col=0)
         genes_coords = pd.read_csv(sc_features_file, index_col=0)
+    elif arguments().sp == 'ca':
+        chr_loc = pd.read_csv(dependencies_dir + ca_hermes_on_chr, index_col=0)
+        genes_coords = pd.read_csv(ca_features_file, index_col=0)
+        chromes = list(genes_coords['chrom'])
+        genes_coords['chrom'] = [str(chrom)[:9] for chrom in chromes]
+        genes_coords = genes_coords[genes_coords['chrom'].str.contains('A')]
+    elif arguments().sp == 'sp':
+        chr_loc = pd.read_csv(dependencies_dir + sp_hermes_on_chr, index_col=0)
+        genes_coords = pd.read_csv(sp_features_file, index_col=0).rename(columns={'Standard name': 'id'})
+        genes_coords['id'] = genes_coords['id'].str[5:]
+        genes_coords = genes_coords[(genes_coords['chrom'] == 'I') | (genes_coords['chrom'] == 'II') |
+                                    (genes_coords['chrom'] == 'III')]
     else:
         raise ValueError('Unknown species flag specified')
 
-    hit_map2 = pd.read_csv(os.path.splitext(data_directory + sorted_bam)[0] + '_Hits.csv')
+    hit_map2 = pd.read_csv(os.path.splitext(data_directory + sorted_bam)[0] + '_Hits.csv', index_col=0)
+    if arguments().sp == 'sp':
+        hit_map2['Chromosome'] = hit_map2['Chromosome'].str[3:]
+
+    if arguments().sp == 'ca':
+        hit_map_chr = list(hit_map2['Chromosome'].unique())
+        chroms = list(genes_coords['chrom'].unique())
+        chroms_tra = dict(zip(hit_map_chr, chroms))
+        hit_map2['chrom'] = hit_map2['Chromosome'].map(chroms_tra)
+        hit_map2['Chromosome'] = hit_map2['chrom']
+        hit_map2.pop('chrom')
+
     chroms = list(genes_coords['chrom'].unique())
-    offset = 600
+    if arguments().sp == 'sp':
+        # chroms = chroms[:-1]
+        hit_map2 = hit_map2[(hit_map2['Chromosome'] == 'I') | (hit_map2['Chromosome'] == 'II') |
+                            (hit_map2['Chromosome'] == 'III')]
+
     neigh_offset = 10000
     target_counts = []
     up_target_counts = []
@@ -341,6 +426,11 @@ def classifier_features():
     genes_coords['Neighbourhood Hits'] = neighbourhood
     genes_coords['Neighbourhood Index'] = (genes_coords['Hits'] / genes_coords['Length']) / \
                                           (genes_coords['Neighbourhood Hits'] / neigh_offset * 2)
+    genes_coords['Neighbourhood Index 2'] = ((genes_coords['Hits_' + str(offset) + '_bp_upstream']
+                                              + genes_coords['Hits']
+                                              + genes_coords['Hits_' + str(offset) + '_bp_downstream'])
+                                              / genes_coords['Length']) / \
+                                          (genes_coords['Neighbourhood Hits'] / neigh_offset * 2)
     genes_coords['Max Free Region'] = max_free
     genes_coords['Freedom Index'] = genes_coords['Max Free Region'] / genes_coords['Length']
     genes_coords['target_seq_counts'] = target_counts
@@ -356,7 +446,7 @@ def classifier_features():
                                        str(offset) + '_up_target_per_bp': 4,
                                        str(offset) + '_down_target_per_bp': 4})
     print('----------Done!---------')
-    genes_coords.to_csv(class_features)
+    genes_coords.to_csv(class_features, index=False)
 
 
 def count_in_range(coords, segment, start, end, s_offset=0, e_offset=1):
@@ -438,9 +528,20 @@ def sc_trans():
 
 
 if __name__ == '__main__':
+    if arguments().sp == 'cg':
+        features_file = cg_features_file
+    elif arguments().sp == 'sc':
+        features_file = sc_features_file
+    elif arguments().sp == 'ca':
+        features_file = ca_features_file
+    elif arguments().sp == 'sp':
+        features_file = sp_features_file
 
     if not os.path.exists(data_directory + bam_index):
         bash_pipeline()
+
+    if not os.path.exists(features_file):
+        get_features()
 
     if not os.path.exists(os.path.splitext(data_directory + sorted_bam)[0] + '_Hits.csv'):
         glabrata_hitmap()
@@ -448,10 +549,15 @@ if __name__ == '__main__':
     if arguments().sp == 'cg':
         if not os.path.exists(dependencies_dir + cg_hermes_on_chr):
             target_seq(cg_ref_file, target_Hermes)
-
     if arguments().sp == 'sc':
         if not os.path.exists(dependencies_dir + sc_hermes_on_chr):
             target_seq(sc_ref_file, target_Hermes)
+    if arguments().sp == 'ca':
+        if not os.path.exists(dependencies_dir + ca_hermes_on_chr):
+            target_seq(ca_ref_file, target_PiggyBac)
+    if arguments().sp == 'sp':
+        if not os.path.exists(dependencies_dir + sp_hermes_on_chr):
+            target_seq(sp_ref_file, target_PiggyBac)
 
     if not os.path.exists(class_features):
-        classifier_features()
+        classifier_features(offset)

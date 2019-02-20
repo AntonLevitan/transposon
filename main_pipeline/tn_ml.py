@@ -107,17 +107,35 @@ def cross_validate(X, y):
     matplotlib.pyplot.savefig("glabrata" + CV_FILE_SUFFIX)
     matplotlib.pyplot.show()
 
-
-def plot_feat_imp():
-
-    # feature importance plot
-    classifier = sklearn.ensemble.RandomForestClassifier(n_estimators=200, n_jobs=-1, random_state=15)
     classifier.fit(final_features2, label2)
-    
+
     # feature_list = list(final_features.columns.values)
     feature_list = ['Hits', 'Reads', 'Length', 'Neighborhood Index',
-                     '600_bp_up_hits', '600_bp_down_hits',
-                     'Freedom Index', 'target_per_bp',	'600_up_targets',	'600_down_targets']
+                    '600_bp_up_hits', '600_bp_down_hits',
+                    'Freedom Index', 'target_per_bp', '600_up_targets', '600_down_targets']
+
+    importances = list(classifier.feature_importances_)
+    feature_importances = [(feature, round(importance, 2)) for feature,
+                                                               importance in zip(feature_list, importances)]
+    feature_importances = sorted(feature_importances, key=lambda x: x[1], reverse=True)
+
+    matplotlib.pyplot.style.use('fivethirtyeight')
+    x_values = list(range(len(importances)))
+    matplotlib.pyplot.bar(x_values, importances, orientation='vertical')
+    matplotlib.pyplot.xticks(x_values, feature_list, rotation=90)
+    matplotlib.pyplot.ylabel('Importance')
+    matplotlib.pyplot.title('Feature Importance')
+    matplotlib.pyplot.savefig('glabrata' + '_feature_importance')
+    matplotlib.pyplot.show()
+
+    # feature importance plot
+    classifier = sklearn.ensemble.RandomForestClassifier(n_estimators=200, n_jobs=-1, random_state=0)
+    classifier.fit(X, y)
+    
+    # feature_list = list(final_features.columns.values)
+    feature_list = ['Standard name', 'id', 'Hits', 'Reads', 'Length', 'Neighbourhood Index',
+                     '600_bp_up_target_seq_counts', '600_bp_down_target_seq_counts',
+                     'Freedom Index', 'target_per_bp',	'600_up_target_per_bp',	'600_down_target_per_bp']
 
     importances = list(classifier.feature_importances_)
     feature_importances = [(feature, round(importance, 2)) for feature, 
@@ -130,7 +148,7 @@ def plot_feat_imp():
     matplotlib.pyplot.xticks(x_values, feature_list, rotation=90)
     matplotlib.pyplot.ylabel('Importance')
     matplotlib.pyplot.title('Feature Importance')
-    matplotlib.pyplot.savefig('glabrata' + '_feature_importance')
+    matplotlib.pyplot.savefig('albicans' + '_feature_importance' + '.png')
     matplotlib.pyplot.show()
 
 
